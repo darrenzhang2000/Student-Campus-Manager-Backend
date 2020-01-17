@@ -3,6 +3,7 @@ const { Student, Campus } = require('../database/models');
 const students = require('../data/students');
 const campuses = require('../data/campuses');
 
+//Populate the Campus table in the database with campus data (with everything except enrollments)
 const populateCampusesTable = async (campuses) =>{
   for(let i = 0; i < campuses.length; i++){
     let currentCampus = campuses[i];
@@ -23,19 +24,10 @@ const populateStudentsTable = async (students) => {
   }
 }
 
-const addEnrollments = async () => {
-  let allCampuses = await Campus.findAll();
-  allCampuses.forEach( async campus => {
-      let enrollments = await campus.getStudents();
-      console.log("enrollments", enrollments);
-  });
-}
-
 const seedDatabase = async () => {
   try {
     await populateCampusesTable(campuses);
     await populateStudentsTable(students);
-    await addEnrollments();
     console.log("Successfully seeded");
   }
   catch(err){
