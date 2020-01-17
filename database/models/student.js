@@ -33,11 +33,6 @@ const Student = db.define("student", {
     allowNull: false
   }
 
-  // studentCampus: {
-  //   type: Sequelize.INTEGER,
-  //   allowNull: false
-  // }
-
 });
 
 module.exports = Student;

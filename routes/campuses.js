@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { Campus } = require('../database/models');
+const { Campus, Student } = require('../database/models');
 
 router.get('/', function(req, res, next) {
-  Campus.findAll()
+  Campus.findAll({ include: [Student] })
     .then(campuses => res.json(campuses))
     .catch(err => console.log(err))
 });

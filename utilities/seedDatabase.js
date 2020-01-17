@@ -10,7 +10,7 @@ const populateCampusesTable = async (campuses) =>{
   }
 }
 
-const populateStudentsTable = async (students) =>{
+const populateStudentsTable = async (students) => {
   for(let i = 0; i < students.length; i++){
     let currentStudent = students[i];
     //saves currentStudent into the database
@@ -23,38 +23,19 @@ const populateStudentsTable = async (students) =>{
   }
 }
 
-
-/*
-  {
-    studentID: 1
-    campusID: 1
-  }
-*/
-const populateEnrollmentsAndStudentCampus = async (idList) =>{
-  let campusID = Campus.findByPk(idList.campusID);
-
-  //add campusID as foreign key to student 
-  
-  //append studentID as foreign key to campus 
-
+const addEnrollments = async () => {
+  let allCampuses = await Campus.findAll();
+  allCampuses.forEach( async campus => {
+      let enrollments = await campus.getStudents();
+      console.log("enrollments", enrollments);
+  });
 }
 
 const seedDatabase = async () => {
-  // await Promise.all([
-  //   Student.create({
-  //     firstName: "Kyrie",
-  //     lastName: "Irving",
-  //     gpa: 4.0,
-  //     image: "www.google.com",
-  //     email: "asd",
-  //     studentCampus: "hunter"
-
-  //   }),
-  //  ]);
-
   try {
     await populateCampusesTable(campuses);
     await populateStudentsTable(students);
+    await addEnrollments();
     console.log("Successfully seeded");
   }
   catch(err){

@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { Student } = require('../database/models');
+const { Student, Campus } = require('../database/models');
 
 router.get('/', function(req, res, next) {
-  Student.findAll()
+  /*
+  
+  Equivalent to: SELECT * FROM Students WHERE students."id" = campuses."id"
+
+  Once we create an association between student and campus, we "joined" the two.
+  Then we can include the "campus" as a key and the actual campus object as a value.
+
+  */
+  Student.findAll({ include: [Campus] }) 
     .then(students => res.json(students))
     .catch(err => console.log(err))
 });
