@@ -27,7 +27,7 @@ router.post('/', async function(req, res, next){
 
 router.put('/:id', async (req, res, next) =>{
   try{
-    // console.log(req);
+    console.log(req.query);
     let updatedStudentInfo = await Student.update(req.query, {
       where: { id: req.params.id },
       returning: true,
